@@ -16,14 +16,14 @@ blueprint:
         target:
           entity:
             domain: light
-    luminance_entity:
-      name: Luminance
+    illuminance_entity:
+      name: Illuminance Sensor
       selector:
         entity:
           domain: sensor
-          device_class: luminance
-    luminance_level:
-      name: Luminance level
+          device_class: illuminance
+    illuminance_level:
+      name: Illuminance Level
       description: Higher level of luminance to met the trigger condition (light turn on below the value).
       default: 10
       selector:
@@ -32,7 +32,7 @@ blueprint:
           max: 60000
           unit_of_measurement: lux
     no_motion_wait:
-      name: Wait time
+      name: Wait Time
       description: Time to leave the light on after last motion is detected.
       default: 120
       selector:
@@ -59,7 +59,7 @@ condition:
         after_offset: '+01:00:00'
         before: sunset
         before_offset: '-01:00:00'
-      - - "{{ states('!input luminance_entity') | float(0) < !input luminance_level }}"
+      - - "{{ states('!input illuminance_entity') | float(0) < !input illuminance_level }}"
 action:
   - alias: "Turn on the light"
     service: light.turn_on

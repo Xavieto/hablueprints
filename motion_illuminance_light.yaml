@@ -56,10 +56,12 @@ condition:
     conditions:
       - condition: sun
         after: sunrise
-        after_offset: '+01:00:00'
+        after_offset: '+00:10:00'
         before: sunset
-        before_offset: '-01:00:00'
-      - "{{ states('!input illuminance_entity') | float(0) < !input illuminance_level }}"
+        before_offset: '-00:10:00'
+  - condition: numeric_state
+    entity_id: !input illuminance_entity
+    below: !input illuminance_level
 action:
   - alias: "Turn on the light"
     service: light.turn_on

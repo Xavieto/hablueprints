@@ -19,9 +19,9 @@ blueprint:
     luminance_entity:
       name: Luminance
       selector:
-        target:
-          entity:
-            domain: luminance
+        entity:
+          domain: sensor
+          device_class: luminance
     luminance_level:
       name: Luminance level
       description: Higher level of luminance to met the trigger condition (light turn on below the value).

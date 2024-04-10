@@ -1,0 +1,87 @@
+blueprint:
+  name: Cover Automation
+  description: Automatically managed cover based on illuminance, House mode and more
+  domain: automation
+  source_url: https://github.com/Xavieto/hablueprints/blob/main/cover_automation.yaml
+  input:
+    alarm:
+      name: Alarm
+      selector:
+        target:
+          entity:
+            domain: alarm
+    cover_target:
+      name: Cover
+      selector:
+        target:
+          entity:
+            domain: cover
+    illuminance_entity:
+      name: Illuminance Sensor
+      selector:
+        entity:
+          domain: sensor
+          device_class: illuminance
+    illuminance_level:
+      name: Illuminance Level
+      description: Higher level of luminance to met the trigger condition (cover will be closed below the value).
+      default: 10
+      selector:
+        number:
+          min: 0
+          max: 60000
+          unit_of_measurement: lux
+
+mode: single
+max_exceeded: silent
+
+trigger:
+  - platform: state
+    entity_id:
+      - !input alarm
+    from: null
+    to: null
+  - platform: sun
+    event: sunrise
+    offset: "-00:10:00"
+  - platform: sun
+    event: sunset
+    offset: "+00:10:00"
+  - platform: numeric_state
+    entity_id:
+      - !input illuminance_entity
+    below: 10
+  - platform: numeric_state
+    entity_id:
+      - !input illuminance_entity
+    above: 10
+condition: []
+action:
+  - if:
+      - condition: and
+        conditions:
+          - condition: numeric_state
+            entity_id: !input illuminance_entity
+            above: 10
+          - condition: sun
+            after: sunrise
+            before: sunset
+            before_offset: "-00:10:00"
+            after_offset: "+00:10:00"
+          - condition: not
+            conditions:
+              - condition: state
+                entity_id: !input alarm
+                state: armed_night
+    then:
+      - service: cover.open_cover
+        metadata: {}
+        data: {}
+        target:
+          entity_id: !input cover_target
+    else:
+      - service: cover.close_cover
+        metadata: {}
+        data: {}
+        target:
+          entity_id: !input cover_target

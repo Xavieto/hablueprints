@@ -4,18 +4,17 @@ blueprint:
   domain: automation
   source_url: https://github.com/Xavieto/hablueprints/blob/main/cover_automation.yaml
   input:
-    alarm_entity:
-      name: Alarm
-      selector:
-        target:
-          entity:
-            domain: alarm_control_panel
     cover_target:
       name: Cover
       selector:
         target:
           entity:
             domain: cover
+    alarm_entity:
+      name: Alarm
+      selector:
+        entity:
+          domain: alarm_control_panel
     illuminance_entity:
       name: Illuminance Sensor
       selector:

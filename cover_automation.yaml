@@ -1,10 +1,10 @@
 blueprint:
   name: Cover Automation
-  description: Automatically managed cover based on illuminance, House mode and more
+  description: Automatically managed "day" cover based on illuminance, Alarm mode and sun
   domain: automation
   source_url: https://github.com/Xavieto/hablueprints/blob/main/cover_automation.yaml
   input:
-    alarm:
+    alarm_entity:
       name: Alarm
       selector:
         target:
@@ -37,8 +37,7 @@ max_exceeded: silent
 
 trigger:
   - platform: state
-    entity_id:
-      - !input alarm
+    entity_id: !input alarm_entity
     from: null
     to: null
   - platform: sun
@@ -69,7 +68,7 @@ action:
           - condition: not
             conditions:
               - condition: state
-                entity_id: !input alarm
+                entity_id: !input alarm_entity
                 state: armed_night
     then:
       - service: cover.open_cover

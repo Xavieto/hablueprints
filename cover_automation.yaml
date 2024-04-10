@@ -48,12 +48,10 @@ trigger:
     event: sunset
     offset: "+00:10:00"
   - platform: numeric_state
-    entity_id:
-      - !input illuminance_entity
+    entity_id: !input illuminance_entity
     below: !input illuminance_level
   - platform: numeric_state
-    entity_id:
-      - !input illuminance_entity
+    entity_id: !input illuminance_entity
     above: !input illuminance_level
 condition: []
 action:

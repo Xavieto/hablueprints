@@ -1,0 +1,25 @@
+blueprint:
+  name: Test Blueprint
+  description: Blueprint for test & debug
+  domain: automation
+  source_url: https://github.com/Xavieto/hablueprints/blob/main/blueprint_test.yaml
+  input:
+    test_entity:
+      name: Entity to test
+      selector:
+        target:
+          entity:
+            domain: alarm_control_panel
+
+mode: single
+max_exceeded: silent
+
+trigger:
+  - platform: time_pattern
+    seconds: "30"
+condition: []
+action:
+  - service: logbook.log
+    metadata: {}
+    data:
+      message: !input test_entity

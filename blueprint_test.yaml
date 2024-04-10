@@ -6,10 +6,9 @@ blueprint:
   input:
     test_entity:
       name: Entity to test
-      selector:
-        target:
-          entity:
-            domain: alarm_control_panel
+      target:
+        entity:
+          domain: alarm_control_panel
 
 mode: single
 max_exceeded: silent

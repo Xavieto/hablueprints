@@ -70,12 +70,10 @@ action:
                 entity_id: !input alarm_entity
                 state: armed_night
     then:
-      - service: cover.open_cover
-        metadata: {}
-        data: {}
+      - alias: "Open Cover"
+        service: cover.open_cover
         target: !input cover_target
     else:
-      - service: cover.close_cover
-        metadata: {}
-        data: {}
+      - alias: "Close Cover"
+        service: cover.close_cover
         target: !input cover_target

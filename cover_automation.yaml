@@ -9,7 +9,7 @@ blueprint:
       selector:
         target:
           entity:
-            domain: alarm
+            domain: alarm_control_panel
     cover_target:
       name: Cover
       selector:

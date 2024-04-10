@@ -73,11 +73,9 @@ action:
       - service: cover.open_cover
         metadata: {}
         data: {}
-        target:
-          entity_id: !input cover_target
+        target: !input cover_target
     else:
       - service: cover.close_cover
         metadata: {}
         data: {}
-        target:
-          entity_id: !input cover_target
+        target: !input cover_target

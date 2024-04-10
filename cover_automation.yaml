@@ -50,11 +50,11 @@ trigger:
   - platform: numeric_state
     entity_id:
       - !input illuminance_entity
-    below: 10
+    below: !input illuminance_level
   - platform: numeric_state
     entity_id:
       - !input illuminance_entity
-    above: 10
+    above: !input illuminance_level
 condition: []
 action:
   - if:
@@ -62,7 +62,7 @@ action:
         conditions:
           - condition: numeric_state
             entity_id: !input illuminance_entity
-            above: 10
+            above: !input illuminance_level
           - condition: sun
             after: sunrise
             before: sunset

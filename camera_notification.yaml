@@ -1,0 +1,76 @@
+blueprint:
+  name: Notification on Motion, Occupancy & Alarm mode
+  description: Notify with a snapshot from camera based on motion, occupancy and alarm mode
+  domain: automation
+  source_url: https://github.com/Xavieto/hablueprints/blob/main/camera_notification.yaml
+  input:
+    motion_entity:
+      name: Motion Sensor
+      selector:
+        entity:
+          domain: binary_sensor
+          device_class: motion
+    occupancy_entity:
+      name: Occupancy Sensor
+      selector:
+        entity:
+          domain: binary_sensor
+          device_class: occupancy
+    alarm_entity:
+      name: Alarm
+      selector:
+        entity:
+          domain: alarm
+    camera_entity:
+      name: Camera
+      selector:
+        entity:
+          domain: camera
+
+trigger:
+  - platform: state
+    entity_id: !input occupancy_entity
+    from: "off"
+    to: "on"
+  - platform: state
+    entity_id: !input motion_entity
+    from: "off"
+    to: "on"
+condition:
+  - condition: not
+    conditions:
+      - condition: state
+        entity_id: !input alarm_entity
+        state: disarmed
+  - condition: state
+    entity_id: !input motion_entity
+    state: "on"
+  - condition: state
+    entity_id: !input occupancy_entity
+    state: "on"
+action:
+  - service: camera.snapshot
+    metadata: {}
+    data:
+      filename: www/tmp/snapshot_MotionCam.jpg
+    target:
+      entity_id: !input camera_entity
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - parallel:
+      - service: notify.mobile_app_...
+        metadata: {}
+        data:
+          message: ""
+          data:
+            image: ""
+      - service: notify.mobile_app_...
+        metadata: {}
+        data:
+          message: ""
+          data:
+            image: ""
+mode: single

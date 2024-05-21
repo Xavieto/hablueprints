@@ -21,3 +21,7 @@ The Cover will be managed based on :
 - Sun down/up
 - Illuminance below the value define
 - House mode (away, home, sleep, ...)
+
+### Turn Off light after motion timeout
+
+The lights are turn OFF after a timeout delay on motion sensor

@@ -1,0 +1,19 @@
+blueprint:
+  name: Toggle Light
+  description: Toggle designated light.
+  domain: script
+  source_url: https://github.com/Xavieto/hablueprints/blob/main/toogle_light.yaml
+  input:
+    light_target:
+      name: Light to toggle
+      selector:
+        target:
+          entity:
+            domain: light
+
+mode: restart
+
+action:
+  - alias: "Toggle the light"
+    service: light.toggle
+    target: !input light_target

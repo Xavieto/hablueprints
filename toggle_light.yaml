@@ -13,7 +13,7 @@ blueprint:
 
 mode: restart
 
-action:
+sequence:
   - alias: "Toggle the light"
-    service: light.toggle
+    action: light.toggle
     target: !input light_target

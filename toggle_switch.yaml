@@ -13,7 +13,7 @@ blueprint:
 
 mode: restart
 
-action:
+sequence:
   - alias: "Toggle the switch"
-    service: switch.toggle
+    action: switch.toggle
     target: !input switch_target

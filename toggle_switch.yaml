@@ -1,0 +1,19 @@
+blueprint:
+  name: Toggle Switch
+  description: Toggle designated switch.
+  domain: script
+  source_url: https://github.com/Xavieto/hablueprints/blob/main/toggle_switch.yaml
+  input:
+    switch_target:
+      name: switch to toggle
+      selector:
+        target:
+          entity:
+            domain: switch
+
+mode: restart
+
+action:
+  - alias: "Toggle the switch"
+    service: switch.toggle
+    target: !input switch_target
